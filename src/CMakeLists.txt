@@ -12,6 +12,7 @@ check_c_source_runs("#include <unistd.h>\nint main(){if(STDERR_FILENO!=2){return
 list(APPEND f90src
   ${CMAKE_CURRENT_SOURCE_DIR}/fsys.f90
   ${CMAKE_CURRENT_SOURCE_DIR}/fsys_isatty.f90
+  ${CMAKE_CURRENT_SOURCE_DIR}/fsys_sleep.f90
   )
 
 if(stdinis0 AND stdoutis1 AND stderris2)
