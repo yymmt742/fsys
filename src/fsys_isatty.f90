@@ -2,16 +2,11 @@
 submodule(fsys) fsys_isatty
   use ISO_C_BINDING
   use ISO_FORTRAN_ENV, only: &
-  &   STDIN => INPUT_UNIT, &
-  &   STDOUT => OUTPUT_UNIT, &
-  &   STDERR => ERROR_UNIT
+  &   FC_STDIN => INPUT_UNIT, &
+  &   FC_STDOUT => OUTPUT_UNIT, &
+  &   FC_STDERR => ERROR_UNIT
+  use mod_fsys_common
   implicit none
-!&<
-  integer(C_INT), parameter :: STDIN_FILENO    = 0
-  integer(C_INT), parameter :: STDOUT_FILENO   = 1
-  integer(C_INT), parameter :: STDERR_FILENO   = 2
-  integer(C_INT), parameter :: TIOCGWINSZ      = INT(z'5413')
-!&>
   interface
     function isatty_(fd) bind(c, NAME="isatty")
       use ISO_C_BINDING
@@ -30,11 +25,11 @@ contains
       cres = isatty_(STDOUT_FILENO)
     else
       select case (unit)
-      case (STDIN)
+      case (FC_STDIN)
         cres = isatty_(STDIN_FILENO)
-      case (STDOUT)
+      case (FC_STDOUT)
         cres = isatty_(STDOUT_FILENO)
-      case (STDERR)
+      case (FC_STDERR)
         cres = isatty_(STDERR_FILENO)
       case default
         cres = 0

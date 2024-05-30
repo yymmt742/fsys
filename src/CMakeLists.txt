@@ -3,16 +3,35 @@ if(NOT EXISTS "${LIB_MOD_DIR}")
   make_directory("${LIB_MOD_DIR}")
 endif()
 
-add_library(
-  ${PROJECT_NAME} STATIC
+include(CheckCSourceCompiles)
+include(CheckCSourceRuns)
+check_c_source_runs("#include <unistd.h>\nint main(){if(STDIN_FILENO!=0){return 1;}}" stdinis0)
+check_c_source_runs("#include <unistd.h>\nint main(){if(STDOUT_FILENO!=1){return 1;}}" stdoutis1)
+check_c_source_runs("#include <unistd.h>\nint main(){if(STDERR_FILENO!=2){return 1;}}" stderris2)
+
+list(APPEND f90src
   ${CMAKE_CURRENT_SOURCE_DIR}/fsys.f90
   ${CMAKE_CURRENT_SOURCE_DIR}/fsys_isatty.f90
+  )
+
+if(stdinis0 AND stdoutis1 AND stderris2)
+list(APPEND f90src
+  ${CMAKE_CURRENT_SOURCE_DIR}/mod_fsys_common.f90
+  )
+else()
+  message(FATAL_ERROR "c macro error")
+endif()
+
+add_library(
+  ${PROJECT_NAME} STATIC
+  ${f90src}
   )
 
 target_compile_options(
   ${PROJECT_NAME}
   PRIVATE
     $<$<COMPILE_LANG_AND_ID:Fortran,GNU>:-O2>
+    $<$<COMPILE_LANG_AND_ID:Fortran,GNU>:-cpp>
     $<$<COMPILE_LANG_AND_ID:Fortran,GNU>:-std=f2008>
     $<$<COMPILE_LANG_AND_ID:Fortran,GNU>:-fimplicit-none>
     $<$<COMPILE_LANG_AND_ID:Fortran,GNU>:-fall-intrinsics>

@@ -9,7 +9,6 @@ include(CTest)
 include(CMakePrintHelpers)
 enable_language(C)
 enable_language(Fortran)
-
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 add_subdirectory(src)
