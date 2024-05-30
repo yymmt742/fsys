@@ -1,16 +1,16 @@
-include(FetchContent)
-FetchContent_Declare(
-  unittest
-  GIT_REPOSITORY https://github.com/yymmt742/unittest
-  GIT_TAG origin/main
-  GIT_PROGRESS TRUE
-  )
-FetchContent_MakeAvailable(unittest)
+#include(FetchContent)
+#FetchContent_Declare(
+#  unittest
+#  GIT_REPOSITORY https://github.com/yymmt742/unittest
+#  GIT_TAG origin/main
+#  GIT_PROGRESS TRUE
+#  )
+#FetchContent_MakeAvailable(unittest)
 
 macro(ADDTEST name)
   add_executable(test_${name} test_${name}.f90)
   target_link_libraries(test_${name} PRIVATE fsys)
-  target_link_libraries(test_${name} PRIVATE unittest)
+#  target_link_libraries(test_${name} PRIVATE unittest)
   target_include_directories(test_${name} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/../src/mod_files)
   target_compile_options(
     test_${name}
