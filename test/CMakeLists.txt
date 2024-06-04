@@ -49,6 +49,17 @@ macro(ADDTEST name)
         $<$<CONFIG:Debug>:$<$<COMPILE_LANG_AND_ID:Fortran,Intel>:-debug>>
         $<$<CONFIG:Debug>:$<$<COMPILE_LANG_AND_ID:Fortran,Intel>:-warn all>>
         )
+  elseif(WIN32)
+    target_compile_options(
+      test_${name}
+      PRIVATE
+        $<$<COMPILE_LANG_AND_ID:Fortran,IntelLLVM>:/free>
+        $<$<CONFIG:Debug>:$<$<COMPILE_LANG_AND_ID:Fortran,IntelLLVM>:/traceback>>
+        $<$<CONFIG:Debug>:$<$<COMPILE_LANG_AND_ID:Fortran,IntelLLVM>:/debug:full>>
+        $<$<COMPILE_LANG_AND_ID:Fortran,Intel>:/free>
+        $<$<CONFIG:Debug>:$<$<COMPILE_LANG_AND_ID:Fortran,Intel>:/traceback>>
+        $<$<CONFIG:Debug>:$<$<COMPILE_LANG_AND_ID:Fortran,Intel>:/debug:full>>
+        )
   endif()
   add_test(NAME ${name} COMMAND $<TARGET_FILE:test_${name}>)
 endmacro(ADDTEST)
