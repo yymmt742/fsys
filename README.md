@@ -52,6 +52,23 @@
 
 ## Usage
 
+   ```fortran
+      program main
+      use fsys
+      implicit none
+        print*, isatty() ! T if OUTPUT_UNIT is tty.
+      end program main
+   ```
+
+   The following suboruotines are available.
+
+  | Interface                | Retrun value | Arguments                                   | Description                                                                                                       |
+  | ------------------------ | ------------ | ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+  | function isatty(unit)    | logical      | unit (integer, optional)                    | Returns .true. if unit is TTY. If unit is not INPUT_UNIT, OUTPUT_UNIT, or ERROR_UNIT, .false. is always returned. |
+  | subroutine sleep(sec)    |              | sec (real, double precision)                | Sleep the process.                                                                                                |
+  | subroutine winsize(x, y) |              | x, y (integer)                              | Get console size.                                                                                                 |
+
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- LICENSE -->
