@@ -34,6 +34,17 @@ function(fypp_generate src target opts list newlist)
   set(${newlist} ${list_} PARENT_SCOPE)
 endfunction()
 
+set(cfiles)
+if(UNIX)
+  list(APPEND cfiles
+    winsize_unix.c
+    )
+elseif(WIN32)
+ list(APPEND cfiles
+   winsize_win.c
+   )
+endif()
+
 set(f90files)
 
 list(APPEND fyppFiles
@@ -41,6 +52,7 @@ list(APPEND fyppFiles
    fsys.fypp
    fsys_sleep.fypp
    fsys_isatty.fypp
+   fsys_winsize.fypp
    )
 
 foreach(fyppFile ${fyppFiles})
@@ -50,6 +62,7 @@ endforeach()
 
 add_library(
   ${PROJECT_NAME} STATIC
+  ${cfiles}
   ${f90files}
   )
 target_compile_options(

@@ -26,6 +26,11 @@ module fsys
   end subroutine ${routine_name("sleep", post)}$
 !
 #:endfor
+  module subroutine winsize(x, y)
+    integer, intent(inout) :: x
+    integer, intent(inout) :: y
+  end subroutine winsize
+!
   end interface
 !
 end module fsys

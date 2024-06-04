@@ -1,0 +1,37 @@
+#:include "common.fypp"
+!| Wrapper of winsize
+submodule(fsys) fsys_winsize
+  use mod_fsys_common
+  use ISO_C_BINDING
+  use ISO_FORTRAN_ENV, only: &
+  &   FC_STDIN => INPUT_UNIT, &
+  &   FC_STDOUT => OUTPUT_UNIT, &
+  &   FC_STDERR => ERROR_UNIT
+  implicit none
+!
+  interface
+    function winsize_(ws_col, ws_row) bind(c)
+      import C_INT
+      integer(C_INT), intent(inout) :: ws_col
+      integer(C_INT), intent(inout) :: ws_row
+      integer(C_INT)                :: winsize_
+    end function winsize_
+  end interface
+!
+contains
+!| Returns the horizontal and vertical size of the terminal in x and y respectively. <br>
+!  If ioctl returns < 0, x will contain -1. <br>
+  module subroutine winsize(x, y)
+    integer, intent(inout) :: x, y
+    integer(C_INT)         :: r, ws_col, ws_row
+    r = winsize_(ws_col, ws_row)
+    if (r == 0) then
+      x = ws_col
+      y = ws_row
+    else
+      x = -1
+      y = -1
+    end if
+  end subroutine winsize
+end submodule fsys_winsize
+
