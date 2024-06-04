@@ -35,11 +35,9 @@ function(fypp_generate src target opts list newlist)
 endfunction()
 
 set(f90files)
-list(APPEND f90files
-  ${CMAKE_CURRENT_SOURCE_DIR}/mod_fsys_common.f90
-  )
 
 list(APPEND fyppFiles
+   mod_fsys_common.fypp
    fsys.fypp
    fsys_sleep.fypp
 #  fsys_isatty.fypp

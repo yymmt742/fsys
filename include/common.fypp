@@ -1,5 +1,14 @@
 #:mute
 
+#:if not defined("XDP_SUPPORT")
+#:set XDP_SUPPORT = False
+#:endif
+#:if not defined("QP_SUPPORT")
+#:set QP_SUPPORT = False
+#:endif
+#:if not defined("HP_SUPPORT")
+#:set HP_SUPPORT = False
+#:endif
 #:if not defined("WIN32")
 #:set WIN32 = False
 #:endif
@@ -22,5 +31,9 @@
 #:set REAL_KIND_TYPE_POSTS = list(zip(REAL_KINDS, REAL_TYPES, REAL_POSTFIX))
 #:set COMPLEX_KIND_TYPE_POSTS = list(zip(REAL_KINDS, COMPLEX_TYPES, COMPLEX_POSTFIX))
 #:set LOGICAL_KIND_TYPE_POSTS = list(zip(LOGICAL_KINDS, LOGICAL_TYPES, LOGICAL_POSTFIX))
+
+#:def routine_name(g, post)
+$:f"fsys_{g}_{post}"
+#:enddef
 
 #:endmute

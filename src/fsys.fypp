@@ -1,10 +1,18 @@
+#:include "common.fypp"
 !| Fortran system control module.
 module fsys
   use ISO_FORTRAN_ENV, only: RK => REAL64
+  use mod_fsys_common
   implicit none
   private
 ! public :: isatty
   public :: sleep
+!
+  interface sleep
+#:for post in REAL_POSTFIX
+    module procedure :: ${routine_name("sleep", post)}$
+#:endfor
+  end interface sleep
 !
   interface
 !   module function isatty(unit) result(res)
@@ -12,9 +20,12 @@ module fsys
 !     logical                       :: res
 !   end function isatty
 !
-    module subroutine sleep(sec)
-      real(RK), intent(in) :: sec
-    end subroutine sleep
+#:for kind, type, post in REAL_KIND_TYPE_POSTS
+  module subroutine ${routine_name("sleep", post)}$(sec)
+    ${type}$, intent(in) :: sec
+  end subroutine ${routine_name("sleep", post)}$
+!
+#:endfor
   end interface
 !
 end module fsys

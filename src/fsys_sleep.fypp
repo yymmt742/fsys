@@ -18,15 +18,18 @@ submodule(fsys) fsys_sleep
 #:endif
   end interface
 contains
+#:for kind, type, post in REAL_KIND_TYPE_POSTS
 !| sleep in seconds
-  module subroutine sleep(sec)
-    real(RK), intent(in) :: sec
+  module subroutine ${routine_name("sleep", post)}$(sec)
+    ${type}$, intent(in) :: sec
 #:if WIN32
     call winsleep(NINT(sec * 1000.0_RK, C_LONG))
 #:else
     integer(C_INT)       :: ierr
     ierr = usleep(NINT(sec * 1000000.0_RK, C_INT))
 #:endif
-  end subroutine sleep
+  end subroutine ${routine_name("sleep", post)}$
+!
+#:endfor
 end submodule fsys_sleep
 

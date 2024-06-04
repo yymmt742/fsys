@@ -53,4 +53,5 @@ macro(ADDTEST name)
   add_test(NAME ${name} COMMAND $<TARGET_FILE:test_${name}>)
 endmacro(ADDTEST)
 
+ADDTEST(sleep)
 ADDTEST(isatty)
