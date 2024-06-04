@@ -1,17 +1,3 @@
-#include(CheckCSourceCompiles)
-#include(CheckCSourceRuns)
-#check_c_source_runs("#include <unistd.h>\nint main(){if(STDIN_FILENO!=0){return 1;}}" stdinis0)
-#check_c_source_runs("#include <unistd.h>\nint main(){if(STDOUT_FILENO!=1){return 1;}}" stdoutis1)
-#check_c_source_runs("#include <unistd.h>\nint main(){if(STDERR_FILENO!=2){return 1;}}" stderris2)
-#
-#if(stdinis0 AND stdoutis1 AND stderris2)
-#list(APPEND f90src
-#  ${CMAKE_CURRENT_SOURCE_DIR}/mod_fsys_common.f90
-#  )
-#else()
-#  message(FATAL_ERROR "c macro error")
-#endif()
-
 set(LIB_MOD_DIR ${CMAKE_CURRENT_BINARY_DIR}/mod_files/)
 if(NOT EXISTS "${LIB_MOD_DIR}")
   make_directory("${LIB_MOD_DIR}")
@@ -68,8 +54,6 @@ add_library(
 target_compile_options(
   ${PROJECT_NAME}
   PRIVATE
-    $<$<COMPILE_LANG_AND_ID:Fortran,GNU>:-O2>
-    $<$<COMPILE_LANG_AND_ID:Fortran,GNU>:-cpp>
     $<$<COMPILE_LANG_AND_ID:Fortran,GNU>:-std=f2008>
     $<$<COMPILE_LANG_AND_ID:Fortran,GNU>:-fimplicit-none>
     $<$<COMPILE_LANG_AND_ID:Fortran,GNU>:-fall-intrinsics>
@@ -102,6 +86,17 @@ if(UNIX)
     $<$<CONFIG:Debug>:$<$<COMPILE_LANG_AND_ID:Fortran,Intel>:-traceback>>
     $<$<CONFIG:Debug>:$<$<COMPILE_LANG_AND_ID:Fortran,Intel>:-debug>>
     $<$<CONFIG:Debug>:$<$<COMPILE_LANG_AND_ID:Fortran,Intel>:-warn all>>
+    )
+else(WIN32)
+  target_compile_options(
+  ${PROJECT_NAME}
+  PRIVATE
+    $<$<COMPILE_LANG_AND_ID:Fortran,IntelLLVM>:/free>
+    $<$<CONFIG:Debug>:$<$<COMPILE_LANG_AND_ID:Fortran,IntelLLVM>:/traceback>>
+    $<$<CONFIG:Debug>:$<$<COMPILE_LANG_AND_ID:Fortran,IntelLLVM>:/debug:full>>
+    $<$<COMPILE_LANG_AND_ID:Fortran,Intel>:/free>
+    $<$<CONFIG:Debug>:$<$<COMPILE_LANG_AND_ID:Fortran,Intel>:/traceback>>
+    $<$<CONFIG:Debug>:$<$<COMPILE_LANG_AND_ID:Fortran,Intel>:/debug:full>>
     )
 endif()
 
