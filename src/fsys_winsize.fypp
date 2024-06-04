@@ -3,10 +3,6 @@
 submodule(fsys) fsys_winsize
   use mod_fsys_common
   use ISO_C_BINDING
-  use ISO_FORTRAN_ENV, only: &
-  &   FC_STDIN => INPUT_UNIT, &
-  &   FC_STDOUT => OUTPUT_UNIT, &
-  &   FC_STDERR => ERROR_UNIT
   implicit none
 !
   interface

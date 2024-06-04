@@ -6,7 +6,6 @@ module mod_fsys_common
   implicit none
   private
   public :: STDIN_FILENO, STDOUT_FILENO, STDERR_FILENO
-  public :: TIOCGWINSZ
   public :: INT8, INT16, INT32, INT64
   public :: SP, DP
 !
@@ -34,7 +33,6 @@ module mod_fsys_common
   integer(C_INT), parameter :: STDIN_FILENO  = 0
   integer(C_INT), parameter :: STDOUT_FILENO = 1
   integer(C_INT), parameter :: STDERR_FILENO = 2
-  integer(C_INT), parameter :: TIOCGWINSZ    = INT(z'5413')
 !&>
 end module mod_fsys_common
 
