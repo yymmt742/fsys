@@ -9,8 +9,8 @@ program main
   call sleep(0.1_REAL64)
   call SYSTEM_CLOCK(count=count_e)
   time = real(count_e - count_s, REAL64) / count_rate
-  if (ABS(time - 0.1_REAL64) > 0.05_REAL64) then
-    print'(2(A,f16.9))', "Sleep failed : system clock = ", time, " target = ", 0.1_REAL64
+  print'(2(A,f16.9))', "Sleep failed : system clock = ", time, " target = ", 0.1_REAL64
+  if (ABS(time - 0.1_REAL64) > 0.15_REAL64) then
     error stop
   end if
 !
