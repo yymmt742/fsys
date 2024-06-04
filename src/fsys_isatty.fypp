@@ -1,18 +1,27 @@
+#:include "common.fypp"
 !| Wrapper of isatty
 submodule(fsys) fsys_isatty
+  use mod_fsys_common
   use ISO_C_BINDING
   use ISO_FORTRAN_ENV, only: &
   &   FC_STDIN => INPUT_UNIT, &
   &   FC_STDOUT => OUTPUT_UNIT, &
   &   FC_STDERR => ERROR_UNIT
-  use mod_fsys_common
   implicit none
   interface
-    function isatty_(fd) bind(c, NAME="isatty")
-      use ISO_C_BINDING
+#:if WIN32
+    function isatty_(fd) bind(c, NAME="_isatty")
+      import C_INT
       integer(C_INT), value, intent(in) :: fd
       integer(C_INT)                    :: isatty_
     end function isatty_
+#:else
+    function isatty_(fd) bind(c, NAME="isatty")
+      import C_INT
+      integer(C_INT), value, intent(in) :: fd
+      integer(C_INT)                    :: isatty_
+    end function isatty_
+#:endif
   end interface
 contains
 !| Return true if unit is tty <br>

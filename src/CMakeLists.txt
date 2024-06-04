@@ -40,10 +40,9 @@ list(APPEND fyppFiles
    mod_fsys_common.fypp
    fsys.fypp
    fsys_sleep.fypp
-#  fsys_isatty.fypp
+   fsys_isatty.fypp
    )
 
- message(STATUS ${fyppFlags})
 foreach(fyppFile ${fyppFiles})
   string(REGEX REPLACE "\\.fypp" ".f90" f90Target ${fyppFile})
   fypp_generate("${fyppFile}" "${f90Target}" "${fyppFlags}" "${f90files}" f90files)

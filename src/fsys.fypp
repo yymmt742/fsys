@@ -5,7 +5,7 @@ module fsys
   use mod_fsys_common
   implicit none
   private
-! public :: isatty
+  public :: isatty
   public :: sleep
 !
   interface sleep
@@ -15,10 +15,10 @@ module fsys
   end interface sleep
 !
   interface
-!   module function isatty(unit) result(res)
-!     integer, intent(in), optional :: unit
-!     logical                       :: res
-!   end function isatty
+    module function isatty(unit) result(res)
+      integer, intent(in), optional :: unit
+      logical                       :: res
+    end function isatty
 !
 #:for kind, type, post in REAL_KIND_TYPE_POSTS
   module subroutine ${routine_name("sleep", post)}$(sec)
