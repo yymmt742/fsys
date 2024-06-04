@@ -23,7 +23,7 @@ contains
   module subroutine ${routine_name("sleep", post)}$(sec)
     ${type}$, intent(in) :: sec
 #:if WIN32
-    call winsleep(NINT(sec * 1000.0_RK, C_LONG))
+    call Sleep(NINT(sec * 1000.0_RK, C_LONG))
 #:else
     integer(C_INT)       :: ierr
     ierr = usleep(NINT(sec * 1000000.0_RK, C_INT))
