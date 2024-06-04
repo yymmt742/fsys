@@ -23,6 +23,13 @@ list(
   "-I${PROJECT_SOURCE_DIR}/include"
   )
 
+if(WIN32)
+  list(
+    APPEND fyppFlags
+    "-DWIN32"
+  )
+endif()
+
 add_subdirectory(src)
 if(CMAKE_BUILD_TYPE MATCHES "Debug")
   add_subdirectory(test)

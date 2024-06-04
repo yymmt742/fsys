@@ -1,5 +1,9 @@
 #:mute
 
+#:if not defined("WIN32")
+#:set WIN32 = False
+#:endif
+
 #:set INTEGER_KINDS = ["INT8", "INT16", "INT32", "INT64"]
 #:set INTEGER_POSTFIX = ["i8", "i16", "i32", "i64"]
 #:set REAL_KINDS = ["sp", "dp"]
@@ -20,4 +24,3 @@
 #:set LOGICAL_KIND_TYPE_POSTS = list(zip(LOGICAL_KINDS, LOGICAL_TYPES, LOGICAL_POSTFIX))
 
 #:endmute
-

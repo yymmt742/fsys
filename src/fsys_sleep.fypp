@@ -1,22 +1,32 @@
+#:include "common.fypp"
 !| Wrapper of nanosleep
 submodule(fsys) fsys_sleep
   use ISO_C_BINDING
   implicit none
-!
   interface
-    function usleep(usec) bind(c, NAME="isatty")
+#:if WIN32
+    subroutine Sleep(dwMillseconds) bind(c)
+      import C_LONG
+      integer(C_LONG), value, intent(in) :: dwMillseconds
+    end function Sleep
+#:else
+    function usleep(usec) bind(c)
       import C_INT
       integer(C_INT), value, intent(in) :: usec
       integer(C_INT)                    :: usleep
     end function usleep
+#:endif
   end interface
-!
 contains
-!| sleep
+!| sleep in seconds
   module subroutine sleep(sec)
     real(RK), intent(in) :: sec
+#:if WIN32
+    call winsleep(NINT(sec * 1000.0_RK, C_LONG))
+#:else
     integer(C_INT)       :: ierr
-    ierr = usleep(INT(sec * 1000000.0_RK, C_INT))
+    ierr = usleep(NINT(sec * 1000000.0_RK, C_INT))
+#:endif
   end subroutine sleep
 end submodule fsys_sleep
 

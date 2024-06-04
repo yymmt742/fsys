@@ -14,7 +14,6 @@ submodule(fsys) fsys_isatty
       integer(C_INT)                    :: isatty_
     end function isatty_
   end interface
-!
 contains
 !| Return true if unit is tty <br>
   module function isatty(unit) result(res)
