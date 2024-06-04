@@ -11,6 +11,18 @@ enable_language(C)
 enable_language(Fortran)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+find_program(FYPP fypp)
+if(NOT FYPP)
+  message(FATAL_ERROR "FYPP not found.")
+endif()
+
+set(fyppFlags)
+
+list(
+  APPEND fyppFlags
+  "-I${PROJECT_SOURCE_DIR}/include"
+  )
+
 add_subdirectory(src)
 if(CMAKE_BUILD_TYPE MATCHES "Debug")
   add_subdirectory(test)

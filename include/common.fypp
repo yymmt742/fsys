@@ -1,0 +1,23 @@
+#:mute
+
+#:set INTEGER_KINDS = ["INT8", "INT16", "INT32", "INT64"]
+#:set INTEGER_POSTFIX = ["i8", "i16", "i32", "i64"]
+#:set REAL_KINDS = ["sp", "dp"]
+#:set REAL_POSTFIX = ["r32", "r64"]
+#:set COMPLEX_POSTFIX = ["c32", "c64"]
+#:set LOGICAL_KINDS = [""]
+#:set LOGICAL_TYPES = ["logical"]
+#:set LOGICAL_POSTFIX = ["logical"]
+
+#:set INTEGER_TYPES = [f"integer({k})" for k in INTEGER_KINDS]
+#:set REAL_TYPES = [f"real({k})" for k in REAL_KINDS]
+#:set COMPLEX_TYPES = [f"complex({k})" for k in REAL_KINDS]
+#:set LOGICAL_TYPES = [f"logical"]
+
+#:set INTEGER_KIND_TYPE_POSTS = list(zip(INTEGER_KINDS, INTEGER_TYPES, INTEGER_POSTFIX))
+#:set REAL_KIND_TYPE_POSTS = list(zip(REAL_KINDS, REAL_TYPES, REAL_POSTFIX))
+#:set COMPLEX_KIND_TYPE_POSTS = list(zip(REAL_KINDS, COMPLEX_TYPES, COMPLEX_POSTFIX))
+#:set LOGICAL_KIND_TYPE_POSTS = list(zip(LOGICAL_KINDS, LOGICAL_TYPES, LOGICAL_POSTFIX))
+
+#:endmute
+
