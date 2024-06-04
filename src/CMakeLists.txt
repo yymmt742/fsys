@@ -1,9 +1,9 @@
-include(CheckCSourceCompiles)
-include(CheckCSourceRuns)
-check_c_source_runs("#include <unistd.h>\nint main(){if(STDIN_FILENO!=0){return 1;}}" stdinis0)
-check_c_source_runs("#include <unistd.h>\nint main(){if(STDOUT_FILENO!=1){return 1;}}" stdoutis1)
-check_c_source_runs("#include <unistd.h>\nint main(){if(STDERR_FILENO!=2){return 1;}}" stderris2)
-
+#include(CheckCSourceCompiles)
+#include(CheckCSourceRuns)
+#check_c_source_runs("#include <unistd.h>\nint main(){if(STDIN_FILENO!=0){return 1;}}" stdinis0)
+#check_c_source_runs("#include <unistd.h>\nint main(){if(STDOUT_FILENO!=1){return 1;}}" stdoutis1)
+#check_c_source_runs("#include <unistd.h>\nint main(){if(STDERR_FILENO!=2){return 1;}}" stderris2)
+#
 #if(stdinis0 AND stdoutis1 AND stderris2)
 #list(APPEND f90src
 #  ${CMAKE_CURRENT_SOURCE_DIR}/mod_fsys_common.f90
@@ -43,6 +43,7 @@ list(APPEND fyppFiles
 #  fsys_isatty.fypp
    )
 
+ message(STATUS ${fyppFlags})
 foreach(fyppFile ${fyppFiles})
   string(REGEX REPLACE "\\.fypp" ".f90" f90Target ${fyppFile})
   fypp_generate("${fyppFile}" "${f90Target}" "${fyppFlags}" "${f90files}" f90files)

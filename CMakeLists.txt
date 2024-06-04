@@ -16,6 +16,21 @@ if(NOT FYPP)
   message(FATAL_ERROR "FYPP not found.")
 endif()
 
+include(CheckFortranSourceCompiles)
+include(CheckFortranSourceRuns)
+check_fortran_source_runs(
+  "if (selected_real_kind(3) == selected_real_kind(6)) STOP 1; end"
+  HP_SUPPORT
+  )
+check_fortran_source_runs(
+  "if (selected_real_kind(33) == -1) STOP 1; end"
+  QP_SUPPORT
+  )
+check_fortran_source_runs(
+  "if (ANY(selected_real_kind(18) == [-1, selected_real_kind(33)])) STOP 1; end"
+  XDP_SUPPORT
+  )
+
 set(fyppFlags)
 
 list(
@@ -23,10 +38,18 @@ list(
   "-I${PROJECT_SOURCE_DIR}/include"
   )
 
+list(
+  APPEND fyppFlags
+  "-DHP_SUPPORT=$<BOOL:${HP_SUPPORT}>"
+  "-DXDP_SUPPORT=$<BOOL:${XDP_SUPPORT}>"
+  "-DQP_SUPPORT=$<BOOL:${QP_SUPPORT}>"
+  "-I${PROJECT_SOURCE_DIR}/include"
+  )
+
 if(WIN32)
   list(
     APPEND fyppFlags
-    "-DWIN32"
+    "-DWIN32=$<BOOL:${WIN32}>"
   )
 endif()
 
