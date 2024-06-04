@@ -1,4 +1,5 @@
 #include <windows.h>
+#include <stdbool.h>
 
 int winsize_(int *ws_col, int *ws_row)
 {

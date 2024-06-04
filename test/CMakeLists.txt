@@ -55,3 +55,4 @@ endmacro(ADDTEST)
 
 ADDTEST(sleep)
 ADDTEST(isatty)
+ADDTEST(winsize)
