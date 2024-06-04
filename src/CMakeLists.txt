@@ -4,13 +4,13 @@ check_c_source_runs("#include <unistd.h>\nint main(){if(STDIN_FILENO!=0){return 
 check_c_source_runs("#include <unistd.h>\nint main(){if(STDOUT_FILENO!=1){return 1;}}" stdoutis1)
 check_c_source_runs("#include <unistd.h>\nint main(){if(STDERR_FILENO!=2){return 1;}}" stderris2)
 
-if(stdinis0 AND stdoutis1 AND stderris2)
-list(APPEND f90src
-  ${CMAKE_CURRENT_SOURCE_DIR}/mod_fsys_common.f90
-  )
-else()
-  message(FATAL_ERROR "c macro error")
-endif()
+#if(stdinis0 AND stdoutis1 AND stderris2)
+#list(APPEND f90src
+#  ${CMAKE_CURRENT_SOURCE_DIR}/mod_fsys_common.f90
+#  )
+#else()
+#  message(FATAL_ERROR "c macro error")
+#endif()
 
 set(LIB_MOD_DIR ${CMAKE_CURRENT_BINARY_DIR}/mod_files/)
 if(NOT EXISTS "${LIB_MOD_DIR}")
@@ -35,11 +35,14 @@ function(fypp_generate src target opts list newlist)
 endfunction()
 
 set(f90files)
+list(APPEND f90files
+  ${CMAKE_CURRENT_SOURCE_DIR}/mod_fsys_common.f90
+  )
 
 list(APPEND fyppFiles
    fsys.fypp
    fsys_sleep.fypp
-   fsys_isatty.fypp
+#  fsys_isatty.fypp
    )
 
 foreach(fyppFile ${fyppFiles})
