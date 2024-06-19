@@ -24,11 +24,11 @@ contains
     ${type}$, intent(in) :: sec
 #:if WIN32
     integer(C_LONG)      :: dwMillseconds
-    dwMillseconds = NINT(sec * 1000.0_RK)
+    dwMillseconds = NINT(sec * 1000.0_${kind}$)
     call windows_sleep(dwMillseconds)
 #:else
     integer(C_INT)       :: ierr
-    ierr = usleep(NINT(sec * 1000000.0_RK, C_INT))
+    ierr = usleep(NINT(sec * 1000000.0_${kind}$, C_INT))
 #:endif
   end subroutine ${routine_name("sleep", post)}$
 !

@@ -1,12 +1,12 @@
 #:include "common.fypp"
 !| Fortran system control module.
 module fsys
-  use ISO_FORTRAN_ENV, only: RK => REAL64
   use mod_fsys_common
   implicit none
   private
   public :: isatty
   public :: sleep
+  public :: winsize
 !
   interface sleep
 #:for post in REAL_POSTFIX
@@ -32,6 +32,5 @@ module fsys
   end subroutine winsize
 !
   end interface
-!
 end module fsys
 
